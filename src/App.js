@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import useMediaQuery from "./hooks/useMediaQuery";
+
+/*Scenes */
+import Navbar from "./scenes/Navbar";
+import Landing from "./scenes/Landing";
+import Footer from "./scenes/Footer";
+
+import VLibras from "@djpfs/react-vlibras";
 
 function App() {
+  const [selectedPage, setSelectedPage] = useState("home");
+  const isDesktop = useMediaQuery("(min-width: 1366px)");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    /* Header */
+    <>
+      <div className="header dark:bg-[#F5EEE4] bg-[#000a1f] h-[auto]">
+        <div className="wrapper max-w-[1366px] my-0 mx-[auto] items-center">
+          <Navbar
+            selectedPage={selectedPage}
+            setSelectedPage={setSelectedPage}
+          />
+        </div>
+
+        <div className="max-w-[1366px] mx-[auto] items-center">
+          {isDesktop && <Landing selectedPage={setSelectedPage} />}
+        </div>
+        <div className="max-w-[1366px] mx-[auto] items-center">
+          {isDesktop && (
+            <Footer
+              selectedPage={setSelectedPage}
+              className="max-w-[1366px] mx-[auto] items-center"
+            />
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
